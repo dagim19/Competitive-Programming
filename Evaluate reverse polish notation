@@ -1,0 +1,28 @@
+class Solution {
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> nums = new Stack();
+        Stack<String> ops = new Stack();
+        
+        for(int i = 0; i < tokens.length; ++i){
+            String s = tokens[i];
+            if(!isOps(s)) nums.push(Integer.parseInt(s));
+            else {
+                int x = nums.pop();
+                int y = nums.pop();
+                if(s.equals("+"))
+                    nums.push(x + y);
+                else if(s.equals("*"))
+                    nums.push(x*y);
+                else if(s.equals("-"))
+                    nums.push(y-x);
+                else 
+                    nums.push(y/x);
+            }
+        }
+        return nums.pop();
+    }
+    
+    private boolean isOps(String s){
+        return s.equals("*") || s.equals("+") || s.equals("-") || s.equals("/");
+    }
+}
