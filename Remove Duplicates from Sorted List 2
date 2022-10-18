@@ -1,0 +1,27 @@
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        HashSet<Integer> lookup = new HashSet<>();
+        ArrayDeque<Integer> list = new ArrayDeque<>();
+
+        while(head != null) {
+            if(!lookup.contains(head.val)) {
+                lookup.add(head.val);
+                list.addLast(head.val);
+            }else{
+                while(list.peekLast() != null && list.peekLast() == head.val)
+                    list.removeLast();
+            }
+            head = head.next;
+        }
+
+        if(list.size() == 0) return null;
+
+        ListNode ls = new ListNode(list.removeFirst());
+        ListNode tempHead = ls;
+        while(list.size() > 0) {
+            tempHead.next = new ListNode(list.removeFirst());
+            tempHead = tempHead.next;
+        }
+        return ls;
+    }
+}
